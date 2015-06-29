@@ -1,0 +1,37 @@
+ INCLUDE PROLOG.H
+_CC1:
+ PUBLIC _rename
+_rename:
+ MOV BX,4
+ ADD BX,SP
+ MOV BX,[BX]
+ PUSH BX  ;
+ MOV BX,4
+ ADD BX,SP
+ MOV BX,[BX]
+ PUSH BX  ;
+ CALL _Urename
+ ADD SP,4
+ RET
+ PUBLIC _Urename
+_Urename:
+  POP SI  ;Return address
+  POP DI  ;New name address
+  POP DX  ;Current name address
+  PUSH DX  ;Restore
+  PUSH DI
+  PUSH SI
+  MOV AX,DS
+  MOV ES,AX ;Set extra segment as our own
+  MOV AH,56H ;Rename
+  INT 21H
+  JNC URENAM1
+  MOV _ERRNO,AX
+  MOV AX,-2
+Urenam1:
+  MOV BX,AX
+  XOR CX,CX  ;Zero in CX
+  EXTRN _ERRNO:WORD
+ RET
+ INCLUDE EPILOG.H
+ END

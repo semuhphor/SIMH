@@ -1,0 +1,8 @@
+ INCLUDE PROLOG.H
+_CC1:
+ PUBLIC _main
+_main:
+ RET
+ EXTRN _Uend:NEAR
+ INCLUDE EPILOG.H
+ END

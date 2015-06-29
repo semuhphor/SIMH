@@ -1,0 +1,40 @@
+ INCLUDE PROLOG.H
+_CC1:
+ PUBLIC _exit
+_exit:
+ SUB SP,2
+ MOV BX,4
+ ADD BX,SP
+ MOV AL,[BX]
+ CBW
+ MOV BX,AX
+ OR BX,BX
+ JNZ $+5
+ JMP _CC3
+ MOV BX,4
+ ADD BX,SP
+ MOV AL,[BX]
+ CBW
+ MOV BX,AX
+ PUSH BX  ;
+ CALL _Uconout
+ ADD SP,2
+_CC3:
+ MOV BX,0
+ PUSH BX  ;
+ MOV BX,0
+ PUSH BX  ;
+ MOV BX,0
+ PUSH BX  ;
+ MOV BX,19456
+ PUSH BX  ;
+ CALL _Umsdos
+ ADD SP,8
+ ADD SP,2
+ RET
+_abort: JMP    _exit
+       PUBLIC  _abort
+ EXTRN _Uconout:NEAR
+ EXTRN _Umsdos:NEAR
+ INCLUDE EPILOG.H
+ END

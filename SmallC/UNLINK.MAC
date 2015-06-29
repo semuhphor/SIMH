@@ -1,0 +1,22 @@
+ INCLUDE PROLOG.H
+_CC1:
+ PUBLIC _unlink
+_unlink:
+ MOV BX,2
+ ADD BX,SP
+ MOV BX,[BX]
+ PUSH BX  ;
+ MOV BX,0
+ PUSH BX  ;
+ MOV BX,0
+ PUSH BX  ;
+ MOV BX,16640
+ PUSH BX  ;
+ CALL _Umsdos
+ ADD SP,8
+ RET
+_delete  equ    _unlink
+        PUBLIC  _delete
+ EXTRN _Umsdos:NEAR
+ INCLUDE EPILOG.H
+ END

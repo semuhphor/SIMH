@@ -1,0 +1,16 @@
+ INCLUDE PROLOG.H
+_CC1:
+ PUBLIC _malloc
+_malloc:
+ MOV BX,2
+ ADD BX,SP
+ MOV BX,[BX]
+ PUSH BX  ;
+ MOV BX,0
+ PUSH BX  ;
+ CALL _Ualloc
+ ADD SP,4
+ RET
+ EXTRN _Ualloc:NEAR
+ INCLUDE EPILOG.H
+ END

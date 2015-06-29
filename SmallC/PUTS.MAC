@@ -1,0 +1,23 @@
+ INCLUDE PROLOG.H
+_CC1:
+ PUBLIC _puts
+_puts:
+ MOV BX,2
+ ADD BX,SP
+ MOV BX,[BX]
+ PUSH BX  ;
+ MOV BX,1
+ PUSH BX  ;
+ CALL _fputs
+ ADD SP,4
+ MOV BX,10
+ PUSH BX  ;
+ MOV BX,1
+ PUSH BX  ;
+ CALL _fputc
+ ADD SP,4
+ RET
+ EXTRN _fputc:NEAR
+ EXTRN _fputs:NEAR
+ INCLUDE EPILOG.H
+ END

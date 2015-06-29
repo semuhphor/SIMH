@@ -1,0 +1,89 @@
+ INCLUDE PROLOG.H
+ EXTRN _Ufd:WORD
+_CC1:
+ PUBLIC _tell
+_tell:
+ MOV BX,6
+ ADD BX,SP
+ MOV BX,[BX]
+ PUSH BX  ;
+ CALL _Umode
+ ADD SP,2
+ OR BX,BX
+ MOV BX,CX
+ JNZ $+3
+ INC BX
+ OR BX,BX
+ JZ $+5
+ JMP _CC4
+ MOV BX,6
+ ADD BX,SP
+ MOV BX,[BX]
+ PUSH BX  ;
+ CALL _isatty
+ ADD SP,2
+ OR BX,BX
+ JZ $+5
+ JMP _CC4
+ MOV BX,0
+ JMP _CC5
+_CC4:
+ MOV BX,1
+_CC5:
+ OR BX,BX
+ JNZ $+5
+ JMP _CC3
+ MOV BX,-1
+ RET
+_CC3:
+ MOV BX,4
+ ADD BX,SP
+ MOV BX,[BX]
+ PUSH BX  ;
+ MOV BX,4
+ ADD BX,SP
+ MOV BX,[BX]
+ PUSH BX  ;
+ MOV BX,OFFSET _Ufd
+ XCHG DX,BX
+ MOV BX,10
+ ADD BX,SP
+ MOV BX,[BX]
+ ADD BX,BX
+ ADD BX,DX
+ MOV BX,[BX]
+ PUSH BX  ;
+ CALL _utell
+ ADD SP,6
+ RET
+ PUBLIC _utell
+_utell:
+  POP SI  ;Return address
+  POP BX  ;Handle
+  PUSH BX ;Restore
+  PUSH SI
+  XOR DX,DX ;Zero in DX
+; Move file pointer 0 from current location
+; this will return current location in DX:AX
+  MOV AX,4201H
+  INT 21H
+  JC UTELLC1  ;Jump if error
+  MOV BP,SP   ;Get SP
+  MOV SI,[BP+6] ;offset lo
+  MOV [SI],AX   ;move it in
+  MOV SI,[BP+4] ;Offset hi
+  MOV [SI],DX   ;Move it in
+  XOR AX,AX     ;Return no error
+  JMP UTELLC2
+ UTELLC1: 
+  MOV _ERRNO,AX  ;Return error
+  MOV AX,-2
+ UTELLC2:
+  MOV BX,AX
+  XOR CX,CX     ;Zero in CX
+  EXTRN _ERRNO:WORD
+ RET
+ EXTRN _isatty:NEAR
+ EXTRN _Umode:NEAR
+ INCLUDE EPILOG.H
+ END

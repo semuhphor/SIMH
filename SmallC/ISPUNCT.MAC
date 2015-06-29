@@ -1,0 +1,40 @@
+ INCLUDE PROLOG.H
+_CC1:
+ PUBLIC _ispunct
+_ispunct:
+ MOV BX,2
+ ADD BX,SP
+ MOV BX,[BX]
+ PUSH BX  ;
+ CALL _isalnum
+ ADD SP,2
+ OR BX,BX
+ MOV BX,CX
+ JNZ $+3
+ INC BX
+ OR BX,BX
+ JNZ $+5
+ JMP _CC3
+ MOV BX,2
+ ADD BX,SP
+ MOV BX,[BX]
+ PUSH BX  ;
+ CALL _iscntrl
+ ADD SP,2
+ OR BX,BX
+ MOV BX,CX
+ JNZ $+3
+ INC BX
+ OR BX,BX
+ JNZ $+5
+ JMP _CC3
+ MOV BX,1
+ JMP _CC4
+_CC3:
+ MOV BX,0
+_CC4:
+ RET
+ EXTRN _isalnum:NEAR
+ EXTRN _iscntrl:NEAR
+ INCLUDE EPILOG.H
+ END

@@ -1,0 +1,20 @@
+ INCLUDE PROLOG.H
+_CC1:
+ PUBLIC _rewind
+_rewind:
+ MOV BX,2
+ ADD BX,SP
+ MOV BX,[BX]
+ PUSH BX  ;
+ MOV BX,0
+ PUSH BX  ;
+ MOV BX,0
+ PUSH BX  ;
+ MOV BX,0
+ PUSH BX  ;
+ CALL _seek
+ ADD SP,8
+ RET
+ EXTRN _seek:NEAR
+ INCLUDE EPILOG.H
+ END

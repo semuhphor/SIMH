@@ -1,0 +1,14 @@
+ INCLUDE PROLOG.H
+ EXTRN _Umemptr:WORD
+_CC1:
+ PUBLIC _free
+_free:
+ MOV BX,2
+ ADD BX,SP
+ MOV BX,[BX]
+ MOV _Umemptr,BX
+ RET
+_cfree  equ    _free
+       PUBLIC  _cfree
+ INCLUDE EPILOG.H
+ END

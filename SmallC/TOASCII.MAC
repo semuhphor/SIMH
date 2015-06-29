@@ -1,0 +1,10 @@
+ INCLUDE PROLOG.H
+_CC1:
+ PUBLIC _toascii
+_toascii:
+ MOV BX,2
+ ADD BX,SP
+ MOV BX,[BX]
+ RET
+ INCLUDE EPILOG.H
+ END

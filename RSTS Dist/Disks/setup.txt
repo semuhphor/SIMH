@@ -1,0 +1,10 @@
+att lpt prt.txt
+att rl1 rsts_sysgng.dsk
+set rl1 lock
+att rl2 rsts_sysl1g.dsk
+set rl2 lock
+att rp0 rsts7_rp04boot.dsk
+att rp1 rsts7_rp04data.dsk
+set cpu 11/70
+set cpu 2m
+attach -am dz 1170

@@ -1,0 +1,12 @@
+ INCLUDE PROLOG.H
+_CC1:
+ PUBLIC _getchar
+_getchar:
+ MOV BX,0
+ PUSH BX  ;
+ CALL _fgetc
+ ADD SP,2
+ RET
+ EXTRN _fgetc:NEAR
+ INCLUDE EPILOG.H
+ END
